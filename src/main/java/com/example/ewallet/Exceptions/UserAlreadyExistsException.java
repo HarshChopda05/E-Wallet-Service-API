@@ -1,0 +1,11 @@
+package com.example.ewallet.Exceptions;
+
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+public class UserAlreadyExistsException extends RuntimeException{
+
+    public UserAlreadyExistsException(String message){
+        super(message);
+    }
+}
