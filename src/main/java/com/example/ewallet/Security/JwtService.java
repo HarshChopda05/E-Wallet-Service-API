@@ -1,6 +1,7 @@
 package com.example.ewallet.Security;
 
 import com.example.ewallet.Configuration.JwtConfig;
+import com.example.ewallet.Models.User;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -20,13 +21,23 @@ public class JwtService {
         return Keys.hmacShaKeyFor(jwtConfig.getSecretKey().getBytes());
     }
 
-    public String generateToken(String email) {
+    public String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(user.getEmail())
+                .claim("userId", user.getId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
                 .signWith(getSignKey())
                 .compact();
+    }
+
+    public Long extractUserId(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userId", Long.class);
     }
 
 

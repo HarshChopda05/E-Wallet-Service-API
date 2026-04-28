@@ -1,16 +1,23 @@
 package com.example.ewallet.Models;
 
+
 import com.example.ewallet.Models.Type.TransactionStatus;
 import com.example.ewallet.Models.Type.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transactions")
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "transactions",
+        indexes = {
+                @Index(name = "idx_sender", columnList = "sender_wallet_id"),
+                @Index(name = "idx_receiver", columnList = "receiver_wallet_id")
+        })
 @Getter
 @Setter
 @NoArgsConstructor
@@ -45,6 +52,7 @@ public class Transaction {
 
     private String remarks;
 
-    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    @CreatedDate
     private LocalDateTime createdAt;
 }

@@ -22,7 +22,7 @@ public class RegisterRequestDTO {
     // Strong password: 1 uppercase, 1 digit, min 8 chars
     @Pattern(
             regexp = "^(?=.*[A-Z])(?=.*\\d).{8,}$",
-            message = "Password must contain at least 1 uppercase, 1 digit and be 8+ chars"
+            message = "Password must contain at least 1 uppercase letter and 1 digit"
     )
     private String password;
 
