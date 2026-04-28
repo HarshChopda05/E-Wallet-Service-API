@@ -22,11 +22,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TransactionServiceImpl implements TransactionService {
 
     private final UserRepository userRepository;
@@ -45,10 +49,10 @@ public class TransactionServiceImpl implements TransactionService {
                 .orElseThrow(() -> new UserNotFoundException("Receiver Not Found!"));
 
         Wallet senderWallet = walletRepository.findByUser(sender)
-                .orElseThrow(() -> new RuntimeException("Sender wallet not found"));
+                .orElseThrow(() -> new WalletNotFoundException("Sender wallet not found"));
 
         Wallet receiverWallet = walletRepository.findByUser(receiver)
-                .orElseThrow(() -> new RuntimeException("Receiver wallet not found"));
+                .orElseThrow(() -> new WalletNotFoundException("Receiver wallet not found"));
 
 
         if (senderWallet.getBalance().compareTo(request.getAmount()) < 0){
@@ -83,28 +87,27 @@ public class TransactionServiceImpl implements TransactionService {
                 .getAuthentication().getName();
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(()-> new UserNotFoundException("User Nod Found!"));
+                .orElseThrow(()-> new UserNotFoundException("User Not Found!"));
 
         Wallet wallet = walletRepository.findByUser(user)
                 .orElseThrow(()-> new WalletNotFoundException("Wallet Not Found!"));
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("created_At").descending());
 
         Page<Transaction> transactions;
 
-        if (type != null){
-            transactions = transactionRepository.findByTypeAndSenderWallet_IdOrReceiverWallet_Id(
-                    type, wallet.getId(), wallet.getId(), pageable);
-        }else {
-            transactions = transactionRepository.findBySenderWallet_IdOrReceiverWallet_Id(
-                    wallet.getId(), wallet.getId(), pageable);
-        }
+        transactions = transactionRepository.findTransactionsWithFilters(wallet.getId(),
+                type != null ? type.name() : null,
+                null, //Not filter by status for this moment
+                pageable
+                );
 
         return TransactionHistoryResponseDTO.builder()
                 .totalElements(transactions.getTotalElements())
                 .totalPages(transactions.getTotalPages())
                 .transactions(transactions.getContent().stream()
-                        .map(this::mapToResponse).collect(Collectors.toList())).build();
+                        .map(this::mapToResponse).collect(toList()))
+                .build();
     }
 
 
