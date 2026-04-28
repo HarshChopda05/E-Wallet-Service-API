@@ -1,5 +1,6 @@
 package com.example.ewallet.Security;
 
+import com.example.ewallet.Exceptions.JwtAuthException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,7 +63,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         }catch (Exception e){
-            System.out.println("JWT Error: " + e.getMessage());
+            throw new JwtAuthException("Invalid or Expired Token");
         }
         filterChain.doFilter(request, response);
     }

@@ -1,6 +1,7 @@
 package com.example.ewallet.Services.Implementations;
 
 import com.example.ewallet.Exceptions.UserAlreadyExistsException;
+import com.example.ewallet.Exceptions.UserNotFoundException;
 import com.example.ewallet.Models.Type.CurrencyType;
 import com.example.ewallet.Models.User;
 import com.example.ewallet.Models.Wallet;
@@ -16,11 +17,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
@@ -54,7 +57,8 @@ public class AuthServiceImpl implements AuthService {
 
         walletRepository.save(wallet);
 
-        String token = jwtService.generateToken(user.getEmail());
+
+        String token = jwtService.generateToken(user);
 
         return AuthResponseDTO.builder()
                 .token(token)
@@ -72,7 +76,11 @@ public class AuthServiceImpl implements AuthService {
                 )
         );
 
-        String token = jwtService.generateToken(request.getEmail());
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(()-> new UserNotFoundException("User Not Found!"));
+
+        String token = jwtService.generateToken(user);
+
 
         return AuthResponseDTO.builder()
                 .token(token)
