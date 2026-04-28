@@ -1,6 +1,7 @@
 package com.example.ewallet.Security;
 
 import com.example.ewallet.Configuration.JwtConfig;
+import com.example.ewallet.Exceptions.JwtAuthException;
 import com.example.ewallet.Models.User;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -50,7 +51,7 @@ public class JwtService {
                     .getBody()
                     .getSubject();
         } catch (JwtException | IllegalArgumentException e) {
-            throw new RuntimeException("Invalid JWT Token");
+            throw new JwtAuthException("Invalid JWT Token");
         }
     }
 
