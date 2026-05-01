@@ -8,8 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 
-public class AuthResponseDTO {
+public class LoginResponseDTO {
+
+    private String message;
 
     private String token;
-    private String message;
 }

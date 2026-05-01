@@ -2,7 +2,8 @@ package com.example.ewallet.Controllers;
 
 import com.example.ewallet.PayLoads.RequestDTOs.LoginRequestDTO;
 import com.example.ewallet.PayLoads.RequestDTOs.RegisterRequestDTO;
-import com.example.ewallet.PayLoads.ResponseDTOs.AuthResponseDTO;
+import com.example.ewallet.PayLoads.ResponseDTOs.LoginResponseDTO;
+import com.example.ewallet.PayLoads.ResponseDTOs.RegisterResponseDTO;
 import com.example.ewallet.Services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,20 +27,20 @@ public class AuthController {
     //Register User
     @Operation(summary = "User Register", description = "Create a new User account in the E-Wallet system")
     @PostMapping("/register")
-    public ResponseEntity<AuthResponseDTO> register(
+    public ResponseEntity<RegisterResponseDTO> register(
             @Valid @RequestBody RegisterRequestDTO request
     ) {
-        AuthResponseDTO response = authService.register(request);
+        RegisterResponseDTO response = authService.register(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     //Login User
     @Operation(summary = "User Login", description = "Authenticates user credentials and returns a JWT token")
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(
+    public ResponseEntity<LoginResponseDTO> login(
             @Valid @RequestBody LoginRequestDTO request
     ) {
-        AuthResponseDTO response = authService.login(request);
+        LoginResponseDTO response = authService.login(request);
         return ResponseEntity.ok(response);
     }
 

@@ -7,7 +7,8 @@ import com.example.ewallet.Models.User;
 import com.example.ewallet.Models.Wallet;
 import com.example.ewallet.PayLoads.RequestDTOs.LoginRequestDTO;
 import com.example.ewallet.PayLoads.RequestDTOs.RegisterRequestDTO;
-import com.example.ewallet.PayLoads.ResponseDTOs.AuthResponseDTO;
+import com.example.ewallet.PayLoads.ResponseDTOs.LoginResponseDTO;
+import com.example.ewallet.PayLoads.ResponseDTOs.RegisterResponseDTO;
 import com.example.ewallet.Repositories.UserRepository;
 import com.example.ewallet.Repositories.WalletRepository;
 import com.example.ewallet.Security.JwtService;
@@ -33,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
 
     @Override
-    public AuthResponseDTO register(RegisterRequestDTO request) {
+    public RegisterResponseDTO register(RegisterRequestDTO request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new UserAlreadyExistsException("Email already registered");
@@ -60,14 +61,13 @@ public class AuthServiceImpl implements AuthService {
 
         String token = jwtService.generateToken(user);
 
-        return AuthResponseDTO.builder()
-                .token(token)
+        return RegisterResponseDTO.builder()
                 .message("User registered successfully")
                 .build();
     }
 
     @Override
-    public AuthResponseDTO login(LoginRequestDTO request) {
+    public LoginResponseDTO login(LoginRequestDTO request) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -82,7 +82,7 @@ public class AuthServiceImpl implements AuthService {
         String token = jwtService.generateToken(user);
 
 
-        return AuthResponseDTO.builder()
+        return LoginResponseDTO.builder()
                 .token(token)
                 .message("Login successful")
                 .build();
