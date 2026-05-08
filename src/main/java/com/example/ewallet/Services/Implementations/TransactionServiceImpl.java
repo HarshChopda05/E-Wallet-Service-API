@@ -38,6 +38,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
 
     @Override
+    @Transactional
     public TransactionResponseDTO transfer(TransferRequestDTO request) {
         String senderEmail = SecurityContextHolder.getContext().
                 getAuthentication().getName();

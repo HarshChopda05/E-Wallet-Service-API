@@ -3,6 +3,7 @@ package com.example.ewallet.Configuration;
 import com.example.ewallet.Security.CustomUserDetailsService;
 import com.example.ewallet.Security.JwtFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+
 
     private final JwtFilter jwtFilter;
 

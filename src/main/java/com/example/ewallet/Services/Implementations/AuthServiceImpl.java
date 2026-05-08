@@ -81,7 +81,6 @@ public class AuthServiceImpl implements AuthService {
 
         String token = jwtService.generateToken(user);
 
-
         return LoginResponseDTO.builder()
                 .token(token)
                 .message("Login successful")
