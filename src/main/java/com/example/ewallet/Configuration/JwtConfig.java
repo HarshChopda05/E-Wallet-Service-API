@@ -10,6 +10,8 @@ public class JwtConfig {
 
     //This is updated
 
+
+
     @Value("${jwt.secretKey}")
     private String secretKey;
 
