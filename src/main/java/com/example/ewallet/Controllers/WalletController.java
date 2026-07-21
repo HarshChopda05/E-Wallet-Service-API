@@ -7,11 +7,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@Tag(name = "Wallet APIs", description = "Wallet operations like balance check and adding funds")
+@Tag(name = "Wallet APIs", description = "Wallet operations like, balance check and adding funds")
 @RestController
 @RequestMapping("/api/wallet")
 @RequiredArgsConstructor
@@ -30,11 +31,9 @@ public class WalletController {
     //Deposit Money
     @Operation(summary = "Add Funds to Wallet", description = "Adds a specified amount to the user's wallet balance")
     @PostMapping("/deposit")
-    public ResponseEntity<WalletResponseDTO> deposit(
-            @Valid @RequestBody DepositRequestDTO request
-    ) {
+    public ResponseEntity<WalletResponseDTO> deposit(@Valid @RequestBody DepositRequestDTO request) {
         WalletResponseDTO response = walletService.deposit(request);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.ewallet.PayLoads.ResponseDTOs;
 
 import lombok.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 

@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
                 @Index(name = "idx_sender", columnList = "sender_wallet_id"),
                 @Index(name = "idx_receiver", columnList = "receiver_wallet_id")
         })
+
 @Getter
 @Setter
 @NoArgsConstructor

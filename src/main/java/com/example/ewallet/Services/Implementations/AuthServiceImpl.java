@@ -58,7 +58,6 @@ public class AuthServiceImpl implements AuthService {
 
         walletRepository.save(wallet);
 
-
         String token = jwtService.generateToken(user);
 
         return RegisterResponseDTO.builder()

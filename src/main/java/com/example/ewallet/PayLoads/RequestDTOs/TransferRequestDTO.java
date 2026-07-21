@@ -15,11 +15,11 @@ import java.math.BigDecimal;
 public class TransferRequestDTO {
 
     @Email
-    @NotNull
+    @NotNull(message = "Recipient Email must be required!")
     private String recipientEmail;
 
     @NotNull
-    @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
+    @DecimalMin(value = "0.01", message = "Amount must be greater than 0 !")
     private BigDecimal amount;
 
     private String remarks;

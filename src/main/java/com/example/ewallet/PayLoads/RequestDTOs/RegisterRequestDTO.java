@@ -1,11 +1,9 @@
 package com.example.ewallet.PayLoads.RequestDTOs;
 
 import com.example.ewallet.Models.Type.CurrencyType;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
-
 
 @Getter
 @Setter
@@ -13,7 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class RegisterRequestDTO {
-
 
     @NotBlank
     private String email;

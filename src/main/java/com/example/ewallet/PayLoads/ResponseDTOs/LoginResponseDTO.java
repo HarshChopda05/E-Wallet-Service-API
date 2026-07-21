@@ -11,6 +11,5 @@ import lombok.*;
 public class LoginResponseDTO {
 
     private String message;
-
     private String token;
 }

@@ -24,8 +24,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.stream.Collectors;
-
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -40,6 +38,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional
     public TransactionResponseDTO transfer(TransferRequestDTO request) {
+
         String senderEmail = SecurityContextHolder.getContext().
                 getAuthentication().getName();
 

@@ -23,12 +23,10 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final CustomUserDetailsService customUserDetailsService;
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain)
-            throws ServletException, IOException {
+                                    FilterChain filterChain) throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
         //validate header
@@ -56,9 +54,10 @@ public class JwtFilter extends OncePerRequestFilter {
                                 userDetails.getAuthorities()
                         );
 
-                //Set Token
+
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
+                //Set Token
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }

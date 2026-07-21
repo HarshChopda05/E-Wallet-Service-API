@@ -27,9 +27,7 @@ public class AuthController {
     //Register User
     @Operation(summary = "User Register", description = "Create a new User account in the E-Wallet system")
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDTO> register(
-            @Valid @RequestBody RegisterRequestDTO request
-    ) {
+    public ResponseEntity<RegisterResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request){
         RegisterResponseDTO response = authService.register(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -37,11 +35,8 @@ public class AuthController {
     //Login User
     @Operation(summary = "User Login", description = "Authenticates user credentials and returns a JWT token")
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(
-            @Valid @RequestBody LoginRequestDTO request
-    ) {
+    public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
         LoginResponseDTO response = authService.login(request);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

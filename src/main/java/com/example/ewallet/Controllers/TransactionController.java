@@ -24,9 +24,7 @@ public class TransactionController {
     @Operation(summary = "Transfer Money",
             description = "Transfers funds from the authenticated user's wallet to another user's wallet")
     @PostMapping("/transfer")
-    public ResponseEntity<TransactionResponseDTO> transfer(
-            @Valid @RequestBody TransferRequestDTO request
-    ) {
+    public ResponseEntity<TransactionResponseDTO> transfer(@Valid @RequestBody TransferRequestDTO request) {
         TransactionResponseDTO response = transactionService.transfer(request);
         return ResponseEntity.ok(response);
     }

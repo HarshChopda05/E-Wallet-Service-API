@@ -48,7 +48,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-
     //config (manual control + customization)
     @Bean
     public OpenAPI customOpenAPI() {

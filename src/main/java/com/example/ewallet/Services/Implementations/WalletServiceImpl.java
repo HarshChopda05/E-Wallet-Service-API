@@ -53,7 +53,8 @@ public class WalletServiceImpl implements WalletService {
         Wallet wallet = walletRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Wallet not found"));
 
-        wallet.setBalance(wallet.getBalance().add(request.getAmount()));
+            wallet.setBalance(wallet.getBalance().add(request.getAmount()));
+
         walletRepository.save(wallet);
 
         Transaction transaction = Transaction.builder()
