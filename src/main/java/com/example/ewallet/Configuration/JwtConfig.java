@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 public class JwtConfig {
 
+    //This is updated
 
     @Value("${jwt.secretKey}")
     private String secretKey;
